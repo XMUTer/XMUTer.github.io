@@ -170,7 +170,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"I2C","path":"2024/02/24/I2C/"}]`)
+  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -454,7 +454,13 @@
   </div>
 
 
+
+
 </div>
+
+
+
+
 
 <script>
   function setOperateItem () {
@@ -596,5 +602,5 @@
       checkAndSetArticlePageLayout()
     });
   </script>
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
