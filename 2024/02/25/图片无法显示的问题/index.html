@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的技术与生活——hello! | NO title</title>
+  <title>我的技术与生活——图片无法显示的问题 | NO title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/public.css" />
@@ -16,7 +16,7 @@
 
   <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script>
-    document.title = `我的技术与生活——hello!`
+    document.title = `我的技术与生活——图片无法显示的问题`
   </script>
 <meta name="generator" content="Hexo 7.0.0"></head>
 
@@ -193,7 +193,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"hello!","path":"2023/12/07/hello/"}]`)
+  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -264,7 +264,7 @@
         </a>
         <a href="/tags">
           <div>
-            <span>1</span>
+            <span>2</span>
             <span>标签</span>
           </div>
         </a>
@@ -351,7 +351,7 @@
 
 <div class="article-container">
   <div class="article">
-    <h1 class="article-title">hello!</h1>
+    <h1 class="article-title">图片无法显示的问题</h1>
     <div class="article-info">
       <div class="article-info--item">
         <div class="article-info--info">
@@ -364,22 +364,41 @@
           
           <div class="article-info--tags">
             <span>标签：</span>
-            
+            <a class="tag-link" href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" rel="tag">问题解决</a>
           </div>
           
-          <p class="article-info--date">日期：2023-12-07 21:14:01</p>
+          <p class="article-info--date">日期：2024-02-25 09:35:25</p>
         </div>
         <img src="/imgs/default-cover.webp" alt="" class="article-cover">
       </div>
     </div>
     <article class="article-content markdown-body">
-      <p>测试一下是不是行</p>
+      <h2 id="下载插件"><a href="#下载插件" class="headerlink" title="下载插件"></a>下载插件</h2><ul>
+<li>进入你博客的根目录，右键单击, 然后选择 <code>git bash here</code> 打开 git bash.</li>
+<li>键入命令 <code>npm install hexo-asset-image --save</code></li>
+</ul>
+<h2 id="修改插件"><a href="#修改插件" class="headerlink" title="修改插件"></a>修改插件</h2><ul>
+<li>进入博客的根目录，然后下面顺序找到<code>index.js</code>:<br><code>node_modules</code> –&gt; <code>hexo-asset-image</code> –&gt; <code>index.js</code></li>
+<li>用VS Code 或者 记事本打开 <code>index.js</code></li>
+<li>在第 58 行，可以找到这么一行代码：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&#x27;src&#x27;</span>, config.<span class="property">root</span> + link + src);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>把这一行代码改成下面这样</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&#x27;src&#x27;</span>, src);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>保存文件</li>
+</ul>
+<p><img src="../%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/%E7%A5%9E%E5%A5%87%E5%AE%9D%E8%B4%9D.jpg"></p>
 
     </article>
     
     <div class="read-nums">
       <!-- id 将作为查询条件 -->
-      <span id="2023/12/07/hello/" class="leancloud_visitors" data-flag-title="Your Article Title">
+      <span id="2024/02/25/图片无法显示的问题/" class="leancloud_visitors" data-flag-title="Your Article Title">
         <em class="post-meta-item-text">浏览量</em>
         <i class="leancloud-visitors-count"></i>
       </span>
@@ -395,20 +414,15 @@
     <div class="article-catelogue--wrapper">
       <div class="catelogue catelogue-1">
         <h3>目录</h3>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E6%8F%92%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">下载插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%8F%92%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">修改插件</span></a></li></ol>
       </div>
       
         <div class="catelogue catelogue-2">
-          
-            <p>
-              <span>上一篇：</span>
-              <a href="/2024/02/24/I2C/">I2C</a>
-            </p>
            
           
             <p>
               <span>下一篇</span>
-              <a href="/2023/12/07/hello-world/">Hello World</a>
+              <a href="/2024/02/24/I2C/">I2C</a>
             </p>
           
         </div>
@@ -430,7 +444,7 @@
     recordIP: config.recordIP,
     visitor: config.visitor,
     enableQQ: config.enableQQ,
-    path: '2023/12/07/hello/'
+    path: '2024/02/25/图片无法显示的问题/'
   })
 </script>
 
