@@ -170,7 +170,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"}]`)
+  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"Hello World","path":"2023/12/07/hello-world/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -365,13 +365,13 @@
 <h3 id="上标"><a href="#上标" class="headerlink" title="上标"></a>上标</h3><p>面积:m^2^<br>体积:m^3^</p>
 <h3 id="常用表情"><a href="#常用表情" class="headerlink" title="常用表情"></a>常用表情</h3><p>😄😆😵😭😰😅😢😤 😍😎😩👍👎💯👏🔔🎁❓💣 ❤️☕️🌀 🙇💋🙏💦 💩 ❗️ 💢</p>
 <h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p>可以在—分割线加入：设置表格对齐方式<br>“:——–“表示左对齐，”:———:“表示居中对齐，”———-:”表示右对齐</p>
-<p>|Name | Age|<br>加入|:—:  | —:|<br>|Delta| 19|</p>
+<p>|Name | Age|<br>加入|:—:  | —:|<br>|Delta| 19|，变为</p>
 <table>
 <thead>
 <tr>
 <th align="center">Lisa</th>
 <th align="right">21</th>
-<th>，变为</th>
+<th></th>
 <th>Name</th>
 <th>Age</th>
 </tr>
