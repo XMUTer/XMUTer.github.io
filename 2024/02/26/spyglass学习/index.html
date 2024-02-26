@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——spyglass学习 | NO title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——spyglass学习`
+  </script>
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"I2C","path":"2024/02/24/I2C/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"spyglass学习","path":"2024/02/26/spyglass学习/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"开源车载终端计划","path":"2024/02/26/开源车载终端计划/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">XMUTer</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag"></span>
+          <span class="main-left--tag"></span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“花有重开日，人无再少年”</p>
+        <p>“一个简单普通的男孩”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/XMUTer/XMUTer.github.io.git"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>5</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>5</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>2 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>6 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>82天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.0</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">spyglass学习</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/">软件工具学习</a>
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/tags/spyglass/" rel="tag">spyglass</a>
+          </div>
+          
+          <p class="article-info--date">日期：2024-02-26 18:46:37</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <h1 id="1-Spyglass介绍"><a href="#1-Spyglass介绍" class="headerlink" title="1 Spyglass介绍"></a>1 Spyglass介绍</h1><p>​	SpyGlass是目前业界唯一可靠的RTL Sign off解决方案，可以帮助客户在设计早期发现潜在问题，保证产品质量，极大的减少设计风险, 降低设计成本。SpyGlass已经成为集成电路开发过程中必不可少的RTL-QA工具。SpyGlass作为第三代RTL代码质量分析工具的领导者, 已经被全世界的IC设计公司和IP公司广泛采用。</p>
+<h2 id="1-1-Spyglass技术领先优势"><a href="#1-1-Spyglass技术领先优势" class="headerlink" title="1.1 Spyglass技术领先优势"></a>1.1 Spyglass技术领先优势</h2><ul>
+<li>业界唯一公认的RTL sign off解决方案</li>
+<li>软IP出厂质量检验必备工具</li>
+<li>TSMC IP 9000 采用SpyGlass</li>
+<li>业界检查规则最全的检查工具，内含5000余条设计的规则</li>
+<li>业界最全面的多时钟域CDC检查机制</li>
+<li>业界最快速的早期DFT检查方法学</li>
+<li>业界最先进的早期低功耗解决方案</li>
+<li>业界唯一的SDC检查工具</li>
+<li>可与设计流程上其它环节EDA工具无缝连接</li>
+<li>支持深亚微米设计规则</li>
+</ul>
+<h2 id="1-2-SpyGlass子模块介绍"><a href="#1-2-SpyGlass子模块介绍" class="headerlink" title="1.2 SpyGlass子模块介绍"></a>1.2 SpyGlass子模块介绍</h2><ul>
+<li>SpyGlass-Lint<ul>
+<li>支持多种规则检查，能发现诸如Latch等代码质量问题。</li>
+</ul>
+</li>
+<li>SpyGlass-CDC<ul>
+<li>支持所有常见的同步器；自动识别设计中复杂的握手信号和FIFO同步机制并对其进行形式验证；自动识别gray-code逻辑和re-convergent信号并对其进行形式验证。用户不需要提供任何的仿真激励和assertions来测试CDC问题，工具自动生成并进行CDC分析。</li>
+</ul>
+</li>
+<li>SpyGlass-Power<ul>
+<li>帮助用户管理复杂的多电源和电压域：它可以验证、显示和分析多个域之间的串扰问题，并且自动修复功能可以自动的插入level-shifter和isolation逻辑。SpyGlass-Power是包括针对时钟、数据通路控制、总线和内存单元的一套完全的技术。SpyGlass-Power的最新功能还包括基于RTL代码的功耗估计和最优门控时钟设计建议。</li>
+</ul>
+</li>
+<li>SpyGlass-DFT<ul>
+<li>包括丰富的、超过100条DFT设计规则。这些包括时钟规则、锁存器规则、布局规则、三态规则、RAM规则、扫描链规则等。SpyGlass-Test包括At-speed覆盖率预测，因此它能明确的指出今后测试的瓶颈。它不仅能报告覆盖率，还能描述出覆盖率低的原因。它统一的自动修复能力自动的更正很多扫描出的问题。</li>
+</ul>
+</li>
+<li>SpyGlass-Constraints<ul>
+<li>自动生成对应RTL或网表的SDC以及时序异常约束；自动对时序异常进行形式验证；精确的查明SDC的语法、一致性和完整性问题，包括模块内部的、模块之间的，以及模块和整个芯片之间。SpyGlass-Constraints可以把模块级的SDC合并成芯片级的SDC；检测出SDC的不同版本和针对不同工具、不同设计阶段的SDC存在的问题。</li>
+</ul>
+</li>
+</ul>
+<p>以上构成分析RTL问题的完整平台，全面的解决RTL设计中所存在的各方面问题。</p>
+<h2 id="1-3-Spyglass基本概念"><a href="#1-3-Spyglass基本概念" class="headerlink" title="1.3 Spyglass基本概念"></a>1.3 Spyglass基本概念</h2><p>对于Spyglass，我们先要知晓一些基本概念:</p>
+<ul>
+<li><strong>Rule</strong>: 是SpyGlass 进行RTL分析的最小单位。</li>
+<li><strong>Goal</strong>: 是一系列相关Rule的集合,组合起来完成RTL分析的某个特定任务. user可以用GuideWare定义好的Goal, 也可根据工程项目要求来选择一系列rule的集合形成自定义 GUI里面点Goal的button来选择设定, 也可在Prj file 里定义。</li>
+<li><strong>Sub-Methodology</strong>: 是一系列相关Goal的集合, 用以达成某方面特定目标, 如完成CDC check。</li>
+<li><strong>SGDC</strong>: Constraints 文件, 主要包含clock和reset等约束信息。</li>
+<li><strong>Waiver</strong>: 用以过滤一些结果的文件。</li>
+<li><strong>Severity</strong>: report结果中分Fatal, Error, Warning和INFO四等级信息。</li>
+<li><strong>Parameter</strong>: 可以在进行RTL分析之前设定某些参数, 对检查过程进行一些约束。</li>
+</ul>
+<h2 id="1-4-Spyglass流程阶段"><a href="#1-4-Spyglass流程阶段" class="headerlink" title="1.4 Spyglass流程阶段"></a>1.4 Spyglass流程阶段</h2><p>Spyglass的原理流程分为三个阶段：设置阶段、目标和运行阶段、分析结果阶段，如下所示：</p>
+<p><img src="spyglass%E5%9B%BE1.png" alt="spyglass图1"></p>
+<h1 id="2-Spyglass界面操作"><a href="#2-Spyglass界面操作" class="headerlink" title="2 Spyglass界面操作"></a>2 Spyglass界面操作</h1><h2 id="2-1-读取设计文件"><a href="#2-1-读取设计文件" class="headerlink" title="2.1 读取设计文件"></a>2.1 读取设计文件</h2><p>（1）Linux的terminal输入spyglass &amp;，这便打开了Spyglass工具的图形界面。</p>
+<p>（2）点击工具左侧的“Add Files”，加载设计文件。</p>
+<p><img src="spyglass%E5%9B%BE2.png" alt="spyglass图2"></p>
+<p>（3）弹出的选中界面选中所需的Verilog文件，如果准备好了filelist，可以直接选中filelist，然后点击Add按钮</p>
+<p><img src="spyglass%E5%9B%BE3.png" alt="spyglass图3"></p>
+<p>此时Spyglass界面下方的sg_shell界面会打印出读取到文件的相关信息：</p>
+<p><img src="spyglass%E5%9B%BE4.png" alt="spyglass图4"></p>
+<h2 id="2-2-设置顶层模块"><a href="#2-2-设置顶层模块" class="headerlink" title="2.2 设置顶层模块"></a>2.2 设置顶层模块</h2><p>（1）点击“Set Options”，然后双击“Top Level Design Unit”的Value框，输入顶层模块名“uart_top”，再敲回车。</p>
+<p><img src="spyglass%E5%9B%BE5.png" alt="spyglass图5"></p>
+<h2 id="2-3-编译设计"><a href="#2-3-编译设计" class="headerlink" title="2.3 编译设计"></a>2.3 编译设计</h2><p>先点击上方的“Read Design”，再点击左侧的“Run Design Read”，开始进行文件编译和分析，结果见下方窗口。</p>
+<p><img src="%E5%9B%BE6.png" alt="图6"></p>
+<p>这次的文件编译没有问题，界面中的Instances出现了目录结构，都是绿色的。</p>
+<p>如果文件不存在，则会报错提醒，同时Instances里的对应文件会变成黑色。Instance下文件的颜色含义如下：</p>
+<ul>
+<li>绿色表示已准备好进行分析但尚未在内部综合；</li>
+<li>黑色表示无法分析该块（黑框）；</li>
+<li>白色表示该模块是可综合的；</li>
+</ul>
+<h2 id="2-4-静态分析lint"><a href="#2-4-静态分析lint" class="headerlink" title="2.4 静态分析lint"></a>2.4 静态分析lint</h2><p>Lint分析不要求完整的工程文件，因此非常方便分工合作，每个人只负责自己这部分的检查即可。</p>
+<p>（1）先点击上面的“Goal Setup”，然后选中lint下的lint_rtl，最后点击“Run Goal”。</p>
+<p><img src="%E5%9B%BE7.png" alt="图7"></p>
+<p><strong>注意：</strong>如果有特殊需求，可以在lint_rtl里右键选择Edit Rules and Parameters来修改或waive规则。</p>
+<p>（2）下方窗口显示出了分析结果，这里是出现了一个Latch，双击该警告会跳转到出问题的代码。思考后发现这里用了组合逻辑，但if后没有跟else，因此出现了锁存器。</p>
+<p><img src="%E5%9B%BE8.png" alt="图8"></p>
+<p>（3）红色信息表示错误，橙色信息表示警告，绿色信息表示正常。</p>
+<p>（4）选中违规信息，右键选择Waive Selected Messages可以忽略掉某种类型的检查。</p>
+<p>（5）点击方框中的类似图像界面的符号，还可以查看设计的电路原理图</p>
+<h2 id="2-5-状态机完整性分析"><a href="#2-5-状态机完整性分析" class="headerlink" title="2.5 状态机完整性分析"></a>2.5 状态机完整性分析</h2><p>Spyglass还可以用于检查状态机的完整性，这里重新建立工程，引入一个写有状态机的Verilog。</p>
+<h3 id="（1）编辑sgdc文件"><a href="#（1）编辑sgdc文件" class="headerlink" title="（1）编辑sgdc文件"></a>（1）编辑sgdc文件</h3><p>做状态机的结构完备性检查时，需要用到Spyglass 的工程约束文件，叫做SGDC，这是一种类似SDC的约束文件，全称是：Spyglass Design Constraints。</p>
+<p>新建一个spyglass.sgdc文件，内容如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#当前设计工程，需要填写 top 模块名称:FSM_3</span><br><span class="line">current_design FSM_3</span><br><span class="line">#当前模块的时钟周期约束，使用模块名.时钟方式索引</span><br><span class="line">clock -name FSM_3.clk -period 10</span><br><span class="line">#当前模块的复位信号，0是低电平有效，1是高电平有效</span><br><span class="line">reset -name FSM_3.rst_n -value 0</span><br><span class="line">#设置一些固定值，使用固定值来分析电路是否存在结构性问题（非必须）</span><br><span class="line">#set_case_analysis -name fsm.pi_money -value 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）状态机分析"><a href="#（2）状态机分析" class="headerlink" title="（2）状态机分析"></a>（2）状态机分析</h3><p>读取设计文件FSM_3.v和上面写好的约束文件spyglass.sgdc，设置顶层模块为FSM_3，然后点击“Goal Setup”，勾选“adv_lint_verify”，然后点击“Run Goal”，等待报告结果。</p>
+<p><img src="%E5%9B%BE9.png" alt="图9"></p>
+<h3 id="（3）查看状态机"><a href="#（3）查看状态机" class="headerlink" title="（3）查看状态机"></a>（3）查看状态机</h3><p>如果设计没有问题，那么下方窗口显示如下，发现了存在状态机。</p>
+<p><img src="%E5%9B%BE10.png" alt="图10"></p>
+<p>双击该行后，弹出一个“Text Container”报告，点击OK关闭它，这时界面出现了一个新的图标，点击它。</p>
+<p><img src="%E5%9B%BE11.png" alt="图11"></p>
+<p>弹出了状态机图，可以放大和缩小，查看状态机跳转情况。</p>
+<p><img src="%E5%9B%BE12.png" alt="图12"></p>
+<ul>
+<li>红色：无法到达的状态；</li>
+<li>黑色：锁死状态，无法跳出；</li>
+<li>红色线：带有箭头是已经分析的死跳转；</li>
+<li>红色虚线：带有箭头是死跳转驱动；</li>
+<li>蓝色：活锁状态，就是在几个状态中反复循环无法回到初始态；</li>
+</ul>
+<h1 id="3-Spyglass命令操作"><a href="#3-Spyglass命令操作" class="headerlink" title="3 Spyglass命令操作"></a>3 Spyglass命令操作</h1><p>上述操作完成后，退出Spyglass，提示是否保存工程，将其保存为FSM_3.prj，用文本编辑器打开，内容如下：</p>
+<p><img src="%E5%9B%BE13.png" alt="图13"></p>
+<p>这正是我们刚刚操作过的spyglass步骤，那么如何直接采用这些命令呢？</p>
+<h2 id="3-1-读取和编译"><a href="#3-1-读取和编译" class="headerlink" title="3.1 读取和编译"></a>3.1 读取和编译</h2><p>在当前存在FSM_3.prj文件的目录下，使用-batch选项即可自动完成Spyglass的读取和编译，命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -designread -batch |tee spyglass.log</span><br></pre></td></tr></table></figure>
+
+<p>|tee spyglass.log是我另外加的，目的是为了让读取和编译的报告打印到当前目录下的spyglass.log文件中，其实不用加这句也行，因为Spyglass会自动将结果打印到当前目录下FSM_3&#x2F;FSM_3&#x2F;Design_Read&#x2F;spyglass.log中。</p>
+<p><img src="%E5%9B%BE14.png" alt="图14"></p>
+<h2 id="3-2-获取Goal列表"><a href="#3-2-获取Goal列表" class="headerlink" title="3.2 获取Goal列表"></a>3.2 获取Goal列表</h2><p>通过下面命令可以获取可用的Goal列表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -showgoals</span><br></pre></td></tr></table></figure>
+
+<p><img src="%E5%9B%BE15.png" alt="图15"></p>
+<h2 id="3-3-运行Goal分析"><a href="#3-3-运行Goal分析" class="headerlink" title="3.3 运行Goal分析"></a>3.3 运行Goal分析</h2><p>我们试着跑“lint&#x2F;lint_rtl”分析，输入如下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -goals lint/lint_rtl -batch</span><br></pre></td></tr></table></figure>
+
+<p>terminal在不断显示运行结果了，运行完毕后，打印信息提示我们可以到下列文件查看完整log文件：</p>
+<p><img src="%E5%9B%BE17.png" alt="图17"></p>
+<p>参考资料：</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30843953/article/details/109629618">spyglass使用教程-CSDN博客</a></p>
+</li>
+<li><p>[Spyglass的CDC检查 - Galois_V - 博客园 (cnblogs.com)](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/WenGalois123/p/17459291.html#:~:text=Spyglass%E7%9A%84CDC%E6%A3%80%E6%9F%A5">https://www.cnblogs.com/WenGalois123/p/17459291.html#:~:text=Spyglass的CDC检查</a> 接着前面Lint检查之后需要对RTL进行CDC检查，以下是简单的步骤。 1.在完成lint检查后，也就是确保没有语法错误之后，点击Goal Setup，然后勾选主窗口下cdc_setup_check，然后点击Run Goal,(s) ，当运行完成，会自动弹出Analyze Result窗口。 2.得到分析结果后， cdc%2Fcdc_setup_check文件夹消息。)</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xianyuIC/p/17488220.html">Spyglass学习笔记 - 咸鱼IC - 博客园 (cnblogs.com)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/116888880">芯片设计进阶之路——SpyGlass CDC流程深入理解(一) - 知乎 (zhihu.com)</a></p>
+</li>
+</ol>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2024/02/26/spyglass学习/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Spyglass%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1 Spyglass介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Spyglass%E6%8A%80%E6%9C%AF%E9%A2%86%E5%85%88%E4%BC%98%E5%8A%BF"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Spyglass技术领先优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-SpyGlass%E5%AD%90%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 SpyGlass子模块介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Spyglass%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Spyglass基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Spyglass%E6%B5%81%E7%A8%8B%E9%98%B6%E6%AE%B5"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Spyglass流程阶段</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Spyglass%E7%95%8C%E9%9D%A2%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">2 Spyglass界面操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%AF%BB%E5%8F%96%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 读取设计文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 设置顶层模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E7%BC%96%E8%AF%91%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 编译设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90lint"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 静态分析lint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E7%8A%B6%E6%80%81%E6%9C%BA%E5%AE%8C%E6%95%B4%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 状态机完整性分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E7%BC%96%E8%BE%91sgdc%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.1.</span> <span class="toc-text">（1）编辑sgdc文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%8A%B6%E6%80%81%E6%9C%BA%E5%88%86%E6%9E%90"><span class="toc-number">2.5.2.</span> <span class="toc-text">（2）状态机分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-number">2.5.3.</span> <span class="toc-text">（3）查看状态机</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Spyglass%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3 Spyglass命令操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%AF%BB%E5%8F%96%E5%92%8C%E7%BC%96%E8%AF%91"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 读取和编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E8%8E%B7%E5%8F%96Goal%E5%88%97%E8%A1%A8"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 获取Goal列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E8%BF%90%E8%A1%8CGoal%E5%88%86%E6%9E%90"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 运行Goal分析</span></a></li></ol></li></ol>
+      </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2024/02/26/开源车载终端计划/">开源车载终端计划</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2024/02/25/Typora使用教程/">Typora使用教程</a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2024/02/26/spyglass学习/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      下雨不会打伞 
+    </div>
+  </div>
+
+  
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"卡布达","artist":"","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
