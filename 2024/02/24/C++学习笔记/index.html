@@ -170,7 +170,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"C++学习笔记","path":"2024/02/24/C++学习笔记/"},{"title":"MFC设计笔记","path":"2024/02/28/MFC设计笔记/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"spyglass学习","path":"2024/02/26/spyglass学习/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"开源车载终端计划","path":"2024/02/26/开源车载终端计划/"}]`)
+  const posts = JSON.parse(`[{"title":"C++学习笔记","path":"2024/02/24/C++学习笔记/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"MFC设计笔记","path":"2024/02/28/MFC设计笔记/"},{"title":"spyglass学习","path":"2024/02/26/spyglass学习/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"开源车载终端计划","path":"2024/02/26/开源车载终端计划/"},{"title":"线性表List学习","path":"2024/03/02/线性表List学习/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -235,19 +235,19 @@
       <div class="main-left--statics">
         <a href="/categories">
           <div>
-            <span>6</span>
+            <span>7</span>
             <span>分类</span>
           </div>
         </a>
         <a href="/tags">
           <div>
-            <span>6</span>
+            <span>8</span>
             <span>标签</span>
           </div>
         </a>
         <a href="/archives">
           <div>
-            <span>2 </span>
+            <span>3 </span>
             <span>归档</span>
           </div>
         </a>
@@ -304,7 +304,7 @@
       </h5>
       <p class="main-left--subtitle">
         <span>文章数目：</span>
-        <span>7 篇</span>
+        <span>8 篇</span>
       </p>
       <p class="main-left--subtitle">
         <span>最近动态：</span>
@@ -312,7 +312,7 @@
       </p>
       <p class="main-left--subtitle">
         <span>上线时间：</span>
-        <span>84天</span>
+        <span>87天</span>
       </p>
       <p class="main-left--subtitle">
         <span>当前版本：</span>
@@ -350,8 +350,29 @@
       </div>
     </div>
     <article class="article-content markdown-body">
-      <h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="命名空间-namespace"><a href="#命名空间-namespace" class="headerlink" title="命名空间 namespace"></a>命名空间 namespace</h3><p>​	在c++中，名称（name）可以是符号常量、变量、函数、结构、枚举、类和对象等等。工程越大，名称互相冲突性的可能性越大。为了避免，在大规模程序的设计中，以及在程序员使用各种各样的C++库时，这些标识符的命名发生冲突，标准C++引入关键字namespace（命名空间&#x2F;名字空间&#x2F;名称空间）。</p>
+      <h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><h2 id="命名空间-namespace"><a href="#命名空间-namespace" class="headerlink" title="命名空间 namespace"></a>命名空间 namespace</h2><p>​	在c++中，名称（name）可以是符号常量、变量、函数、结构、枚举、类和对象等等。工程越大，名称互相冲突性的可能性越大。为了避免，在大规模程序的设计中，以及在程序员使用各种各样的C++库时，这些标识符的命名发生冲突，标准C++引入关键字namespace（命名空间&#x2F;名字空间&#x2F;名称空间）。</p>
+<p>用法：<code>using namespace xxxx</code></p>
+<h2 id="关键字-new"><a href="#关键字-new" class="headerlink" title="关键字 new"></a>关键字 new</h2><p>new创建类对象，使用完后需使用<strong>delete</strong>删除，跟申请内存类似。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CTest* pTest = <span class="keyword">new</span> <span class="built_in">CTest</span>();</span><br><span class="line"><span class="keyword">delete</span> pTest;</span><br><span class="line"><span class="number">1</span>）A  a；在栈(stack)上分配空间；</span><br><span class="line"><span class="number">2</span>）A  *a；只是声明，还没有分配空间；</span><br><span class="line"><span class="number">3</span>）A  *a= <span class="keyword">new</span> A；在堆(heap)上分配空间；</span><br></pre></td></tr></table></figure>
+
+<p>C++有三种方法创建对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;  </span><br><span class="line"><span class="keyword">class</span>  <span class="title class_">Test</span> &#123;   </span><br><span class="line">  <span class="keyword">private</span>:  </span><br><span class="line">  <span class="keyword">public</span>:  </span><br><span class="line">      <span class="built_in">add</span>()</span><br><span class="line">      &#123;</span><br><span class="line">         <span class="type">int</span> x,y,sum;</span><br><span class="line">         x=<span class="number">5</span>;</span><br><span class="line">         y=<span class="number">5</span>;</span><br><span class="line">         sum=x+y;</span><br><span class="line">         cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;;  </span><br><span class="line"> <span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"> </span>&#123;  </span><br><span class="line">    Test test1;              <span class="comment">//栈中分配  ，由操作系统进行内存的分配和管理</span></span><br><span class="line">    Test test2 = <span class="built_in">Test</span>();       <span class="comment">//栈中分配  ，由操作系统进行内存的分配和管理</span></span><br><span class="line">    Test *test3=<span class="keyword">new</span> <span class="built_in">Test</span>();  <span class="comment">//堆中分配  ，由管理者进行内存的分配和管理，用完必须delete()，否则可能造成内存泄漏</span></span><br><span class="line">    test1.<span class="built_in">add</span>();</span><br><span class="line">    test2.<span class="built_in">add</span>();             <span class="comment">//&quot;.&quot; 是结构体成员引用</span></span><br><span class="line">    test3-&gt;<span class="built_in">add</span>();            <span class="comment">//&quot;-&gt;&quot;是指针引用</span></span><br><span class="line">    <span class="built_in">delete</span>(test3);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	第一种和第二种没什么区别，一个隐式调用，一个显式调用，两者都是在进程虚拟地址空间中的栈中分配内存。栈是系统数据结构，对于线程&#x2F;进程是唯一的，它的分配和释放由操作系统决定，不需要由开发者来管理。在执行函数时，函数内局部变量的存储单元可以在栈上创建，函数执行完毕，系统会自动释放这些存储单元。</p>
+<p>​	第三种使用了new，在堆中分配了内存，堆上的内存分配，亦称动态内存分配。程序在运行的期间用malloc申请的内存，这部分内存由程序员自己负责管理，其生存期由开发者决定：在何时分配，分配多少，并在何时用free来释放该内存。这是唯一可以由开发者参与管理的内存。使用的好坏直接决定系统的性能和稳定。注意：栈中内存的分配和管理由操作系统决定，而堆中内存的分配和管理由管理者决定。</p>
+<p>​	我们需要的内存很少，你又能确定你到底需要多少内存时，用栈。当你需要在运行时才知道你到底需要多少内存时，请用堆。</p>
+<p>下面是自己总结的一些关于new创建类对象特点：</p>
+<ul>
+<li>new创建类对象需要指针接收，一处初始化，多处使用</li>
+<li>new创建类对象使用完需delete销毁</li>
+<li>new创建对象直接使用堆空间，而局部不用new定义类对象则使用栈空间</li>
+<li>new对象指针用途广泛，比如作为函数返回值、函数参数等</li>
+<li>频繁调用场合并不适合new，就像new申请和释放内存一样</li>
+</ul>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40539125/article/details/83715393">【C++】创建对象之new关键字_c++ new一个对象-CSDN博客</a></p>
 <p><img src="11.png" alt="图片加载失败"></p>
+<p>调用函数时，实参一般不会被改变,形参才会！</p>
+<p>解读：实参相当于传入函数的是<strong>常数</strong>，函数对传入的参数进行一系列的运算后，传不出对应的结果。因为函数的结果保存在某个寄存器地址中，若要传出改结果，则需要传出该结果所在的地址。</p>
 
     </article>
     
@@ -360,7 +381,7 @@
     <div class="article-catelogue--wrapper">
       <div class="catelogue catelogue-1">
         <h3>目录</h3>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">1.</span> <span class="toc-text">关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4-namespace"><span class="toc-number">1.1.</span> <span class="toc-text">命名空间 namespace</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">1.</span> <span class="toc-text">关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4-namespace"><span class="toc-number">1.1.</span> <span class="toc-text">命名空间 namespace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97-new"><span class="toc-number">1.2.</span> <span class="toc-text">关键字 new</span></a></li></ol></li></ol>
       </div>
       
         <div class="catelogue catelogue-2">
