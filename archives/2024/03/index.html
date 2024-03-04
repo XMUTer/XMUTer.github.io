@@ -170,7 +170,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"C++学习笔记","path":"2024/02/24/C++学习笔记/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"MFC设计笔记","path":"2024/02/28/MFC设计笔记/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"spyglass学习","path":"2024/02/26/spyglass学习/"},{"title":"开源车载终端计划","path":"2024/02/26/开源车载终端计划/"},{"title":"线性表List学习","path":"2024/03/02/线性表List学习/"}]`)
+  const posts = JSON.parse(`[{"title":"C++学习笔记","path":"2024/02/24/C++学习笔记/"},{"title":"MFC设计笔记","path":"2024/02/28/MFC设计笔记/"},{"title":"Hello World","path":"2023/12/07/hello-world/"},{"title":"Typora使用教程","path":"2024/02/25/Typora使用教程/"},{"title":"spyglass学习","path":"2024/02/26/spyglass学习/"},{"title":"图片无法显示的问题","path":"2024/02/25/图片无法显示的问题/"},{"title":"开源车载终端计划","path":"2024/02/26/开源车载终端计划/"},{"title":"栈Stack学习","path":"2024/03/04/栈Stack学习/"},{"title":"线性表List学习","path":"2024/03/02/线性表List学习/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -241,7 +241,7 @@
         </a>
         <a href="/tags">
           <div>
-            <span>8</span>
+            <span>10</span>
             <span>标签</span>
           </div>
         </a>
@@ -304,7 +304,7 @@
       </h5>
       <p class="main-left--subtitle">
         <span>文章数目：</span>
-        <span>8 篇</span>
+        <span>9 篇</span>
       </p>
       <p class="main-left--subtitle">
         <span>最近动态：</span>
@@ -312,7 +312,7 @@
       </p>
       <p class="main-left--subtitle">
         <span>上线时间：</span>
-        <span>88天</span>
+        <span>89天</span>
       </p>
       <p class="main-left--subtitle">
         <span>当前版本：</span>
@@ -335,6 +335,32 @@
       <div class="index-article">
         <!-- <img class="index-article--cover" src="/imgs/default-cover.webp" alt=""> -->
         <div class="index-article--box">
+          <img class="index-article--cover" data-cover="imgs/default-cover.webp" alt="栈Stack学习" />
+        </div>
+        <div class="index-article--content">
+          <a href="/2024/03/04/%E6%A0%88Stack%E5%AD%A6%E4%B9%A0/">栈Stack学习 </a>
+          <div>
+            
+              <p>
+                <a class="post-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+              </p>
+            
+            
+              <p>
+                <a class="-link" href="/tags/%E9%A1%BA%E5%BA%8F%E6%A0%88/" rel="tag">顺序栈</a><span> ◆ </span><a class="-link" href="/tags/%E9%93%BE%E6%A0%88/" rel="tag">链栈</a><span> ◆ </span><a class="-link" href="/tags/C/" rel="tag">C++</a>
+              </p>
+            
+          </div>
+          <div class="bg"></div>
+        </div>
+      </div>
+    
+  </div>
+  <div class="index-center">
+    
+      <div class="index-article">
+        <!-- <img class="index-article--cover" data-cover="" src="/imgs/default-cover.webp" alt=""> -->
+        <div class="index-article--box">
           <img class="index-article--cover" data-cover="imgs/default-cover.webp" alt="线性表List学习" />
         </div>
         <div class="index-article--content">
@@ -342,7 +368,7 @@
           <div>
             
               <p>
-                <a class="post-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
               </p>
             
             
@@ -356,14 +382,11 @@
       </div>
     
   </div>
-  <div class="index-center">
-    
-  </div>
   <div class="index-right">
     <div class="index-right-wrapper">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog%E8%AF%AD%E6%B3%95/">Blog语法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/problem/">Problem</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">语言学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/">软件工具学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%B1%BB/">项目类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/">项目计划</a></li></ul>
-      <ul class="tags" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/" rel="tag">顺序表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" rel="tag">开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E8%AE%BE%E8%AE%A1/" rel="tag">上位机设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spyglass/" rel="tag">spyglass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/problem/" rel="tag">problem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" rel="tag">markdown基本操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">2024年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">2024年02月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">2023年12月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="tags" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/" rel="tag">顺序表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%BA%E5%BA%8F%E6%A0%88/" rel="tag">顺序栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E6%A0%88/" rel="tag">链栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" rel="tag">开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E8%AE%BE%E8%AE%A1/" rel="tag">上位机设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spyglass/" rel="tag">spyglass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/problem/" rel="tag">problem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" rel="tag">markdown基本操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">2024年03月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">2024年02月</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">2023年12月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 </div>
