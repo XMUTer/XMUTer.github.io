@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>XMUTer的技术小站</title>
   <icon>https://www.gravatar.com/avatar/94a1c030063ab693dfd557261341ef5e</icon>
-  <subtitle>菜鸡CV工程师</subtitle>
+  
   <link href="https://xmuter.github.io/atom.xml" rel="self"/>
   
   <link href="https://xmuter.github.io/"/>
