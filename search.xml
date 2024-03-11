@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>C语言学习笔记</title>
+      <link href="/2024/03/11/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <url>/2024/03/11/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="malloc函数"><a href="#malloc函数" class="headerlink" title="malloc函数"></a>malloc函数</h1><p>C语言中malloc是动态内存分配函数，C++中使用new关键字<br>函数原型：void *malloc(unsigned int num_bytes);</p><p>​void *malloc(sizeof（） * n);  </p><p>表示从堆山动态获取[sizeof（）*n] 大小的空间,</p><p> 其中，void*是泛指的指针类型。可以转换为任意指针类型的参数，一般与sizeof中的类型一致。例如：</p><p>​int* p &#x3D; （int*） malloc(sizeof（int） * n);  </p><p>参数：num_bytes 是无符号整型，用于表示分配的字节数。<br>返回值：如果分配成功则返回指向被分配内存的指针(此存储区中的初始值不确定)，否则返回空指针NULL。void 表示未确定类型的指针，void *可以指向任何类型的数据，更明确的说是指申请内存空间时还不知道用户是用这段空间来存储什么类型的数据。<br>功能：分配长度为num_bytes字节的内存块<br>注意：当内存不再使用时，应使用free()函数将内存块释放。函数返回的指针一定要适当对齐，使其可以用于任何数据对象。关于该函数的原型，在以前malloc返回的是char型指针，新的ANSIC标准规定，该函数返回为void型指针，因此必要时要进行类型转换。</p><h1 id="内存泄露"><a href="#内存泄露" class="headerlink" title="内存泄露"></a>内存泄露</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 语言学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>螺旋矩阵</title>
       <link href="/2024/03/11/%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/"/>
       <url>/2024/03/11/%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5/</url>
