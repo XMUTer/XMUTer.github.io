@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>有效的字母异位词</title>
+      <link href="/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/"/>
+      <url>/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</url>
+      
+        <content type="html"><![CDATA[<h1 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242.有效的字母异位词"></a>242.有效的字母异位词</h1><p><a href="https://leetcode.cn/problems/valid-anagram/description/">242. 有效的字母异位词 - 力扣（LeetCode）</a></p><p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p><p>示例 1: 输入: s &#x3D; “anagram”, t &#x3D; “nagaram” 输出: true</p><p>示例 2: 输入: s &#x3D; “rat”, t &#x3D; “car” 输出: false</p><p><strong>说明:</strong> 你可以假设字符串只包含小写字母。</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>错误思路：本题不可以对两个字符串中的字符asc码分别相加，判断是否相等来做。因为字符串中的字符不相等，asc码相加的结果也可能是相同的。</p><p>正确思路：构建hash表，构建hash function，一个字符串写入数据，另一个字符串删除数据，判断hash表中的元素是否为0。（前提是hash初始化，存储的所有元素都为0）</p><p>本题所需要构造的hash表较小，且数据范围也小，因此使用数组来构建hash表。</p><p>c语言代码实现如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">isAnagram</span><span class="params">(<span class="type">char</span>* s, <span class="type">char</span>* t)</span> &#123;</span><br><span class="line">    <span class="type">int</span> i ;</span><br><span class="line">    <span class="type">int</span> hash[<span class="number">26</span>];</span><br><span class="line">    <span class="built_in">memset</span>(hash,<span class="number">0</span>,<span class="keyword">sizeof</span>(hash));</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(s);i++)&#123;</span><br><span class="line">        hash[ s[i] - <span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(t);i++)&#123;</span><br><span class="line">        hash[ t[i] - <span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i= <span class="number">0</span>;i&lt;<span class="number">26</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(hash[i] != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>c++实现如下：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isAnagram</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> record[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="comment">// 并不需要记住字符a的ASCII，只要求出一个相对数值就可以了</span></span><br><span class="line">            record[s[i] - <span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; t.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            record[t[i] - <span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (record[i] != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// record数组如果有的元素不为零0，说明字符串s和t 一定是谁多了字符或者谁少了字符。</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// record数组所有元素都为零0，说明字符串s和t是字母异位词</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法刷题 </category>
+          
+          <category> 数组 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> C </tag>
+            
+            <tag> hash </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hash表学习</title>
+      <link href="/2024/03/17/hash%E8%A1%A8%E5%AD%A6%E4%B9%A0/"/>
+      <url>/2024/03/17/hash%E8%A1%A8%E5%AD%A6%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<p>hash实现快速插入和快速查找（时间复杂度都为O（1））</p><p>对于data构造一个函数，得到data的hash值，存入hash表中。  </p><p>和函数一样，一个输入都有对应的输出。</p><h2 id="hash扩容"><a href="#hash扩容" class="headerlink" title="hash扩容"></a>hash扩容</h2><p>负载因子 &#x3D; 实际存放元素&#x2F;数组容量</p><p>式子右边大于负载因子时候需要扩容，把所有元素重新插入到新的hash表中</p><h2 id="hash碰撞（多个输入对应同一个输出）"><a href="#hash碰撞（多个输入对应同一个输出）" class="headerlink" title="hash碰撞（多个输入对应同一个输出）"></a>hash碰撞（多个输入对应同一个输出）</h2><p>使用二次hash</p><ul><li>线性探测法</li></ul><p>增：在数组中查找空位，存放数据。</p><p>查：查找的时候，若在原本的值的位置没有，就往下遍历查找，一直查找到空为止。</p><p>删：要把对于位置赋值为-1（相当于伪删除）。如果不给值的话，在查找的时候就找不到删除元素之后的元素。</p><ul><li>开放探测法</li><li>随机探测法</li><li>使用链表</li></ul><p>数组、值小，范围可控</p><p>set、数组很大</p><p>map、k对应有value</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hash </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>环形链表Ⅱ</title>
       <link href="/2024/03/16/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%E2%85%A1/"/>
       <url>/2024/03/16/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%E2%85%A1/</url>
@@ -391,6 +447,25 @@
             <tag> C </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>imx6u开发学习笔记</title>
+      <link href="/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <url>/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<p><strong>mfgtool 上位机固化系统</strong></p><p>直接点击Mfgtool2-eMMC-ddr512-eMMC.vbs即可在线固化</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开源项目 </category>
+          
+      </categories>
+      
       
     </entry>
     

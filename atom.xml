@@ -6,7 +6,7 @@
   <link href="https://xmuter.github.io/atom.xml" rel="self"/>
   
   <link href="https://xmuter.github.io/"/>
-  <updated>2024-03-16T07:02:42.117Z</updated>
+  <updated>2024-03-17T03:34:35.407Z</updated>
   <id>https://xmuter.github.io/</id>
   
   <author>
@@ -15,6 +15,63 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有效的字母异位词</title>
+    <link href="https://xmuter.github.io/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/"/>
+    <id>https://xmuter.github.io/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</id>
+    <published>2024-03-17T03:26:10.000Z</published>
+    <updated>2024-03-17T03:34:35.407Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242.有效的字母异位词"></a>242.有效的字母异位词</h1><p><a href="https://leetcode.cn/problems/valid-anagram/description/">242. 有效的字母异位词 - 力扣（LeetCode）</a></p><p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p><p>示例 1: 输入: s &#x3D; “anagram”, t &#x3D; “nagaram” 输出: true</p><p>示例 2: 输入: s &#x3D; “rat”, t &#x3D; “car” 输出: false</p><p><strong>说明:</strong> 你可以假设字符串只包含小写字母。</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>错误思路：本题不可以对两个字符串中的字符asc码分别相加，判断是否相等来做。因为字符串中的字符不相等，asc码相加的结果也可能是相同的。</p><p>正确思路：构建hash表，构建hash function，一个字符串写入数据，另一个字符串删除数据，判断hash表中的元素是否为0。（前提是hash初始化，存储的所有元素都为0）</p><p>本题所需要构造的hash表较小，且数据范围也小，因此使用数组来构建hash表。</p><p>c语言代码实现如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">isAnagram</span><span class="params">(<span class="type">char</span>* s, <span class="type">char</span>* t)</span> &#123;</span><br><span class="line">    <span class="type">int</span> i ;</span><br><span class="line">    <span class="type">int</span> hash[<span class="number">26</span>];</span><br><span class="line">    <span class="built_in">memset</span>(hash,<span class="number">0</span>,<span class="keyword">sizeof</span>(hash));</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(s);i++)&#123;</span><br><span class="line">        hash[ s[i] - <span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(t);i++)&#123;</span><br><span class="line">        hash[ t[i] - <span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i= <span class="number">0</span>;i&lt;<span class="number">26</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(hash[i] != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>c++实现如下：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isAnagram</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> record[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="comment">// 并不需要记住字符a的ASCII，只要求出一个相对数值就可以了</span></span><br><span class="line">            record[s[i] - <span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; t.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            record[t[i] - <span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (record[i] != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// record数组如果有的元素不为零0，说明字符串s和t 一定是谁多了字符或者谁少了字符。</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// record数组所有元素都为零0，说明字符串s和t是字母异位词</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;242-有效的字母异位词&quot;&gt;&lt;a href=&quot;#242-有效的字母异位词&quot; class=&quot;headerlink&quot; title=&quot;242.有效的字母异位词&quot;&gt;&lt;/a&gt;242.有效的字母异位词&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://leetcode.cn/p</summary>
+      
+    
+    
+    
+    <category term="算法刷题" scheme="https://xmuter.github.io/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/"/>
+    
+    <category term="数组" scheme="https://xmuter.github.io/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/%E6%95%B0%E7%BB%84/"/>
+    
+    
+    <category term="C++" scheme="https://xmuter.github.io/tags/C/"/>
+    
+    <category term="C" scheme="https://xmuter.github.io/tags/C/"/>
+    
+    <category term="hash" scheme="https://xmuter.github.io/tags/hash/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hash表学习</title>
+    <link href="https://xmuter.github.io/2024/03/17/hash%E8%A1%A8%E5%AD%A6%E4%B9%A0/"/>
+    <id>https://xmuter.github.io/2024/03/17/hash%E8%A1%A8%E5%AD%A6%E4%B9%A0/</id>
+    <published>2024-03-17T01:26:02.000Z</published>
+    <updated>2024-03-17T03:28:06.643Z</updated>
+    
+    <content type="html"><![CDATA[<p>hash实现快速插入和快速查找（时间复杂度都为O（1））</p><p>对于data构造一个函数，得到data的hash值，存入hash表中。  </p><p>和函数一样，一个输入都有对应的输出。</p><h2 id="hash扩容"><a href="#hash扩容" class="headerlink" title="hash扩容"></a>hash扩容</h2><p>负载因子 &#x3D; 实际存放元素&#x2F;数组容量</p><p>式子右边大于负载因子时候需要扩容，把所有元素重新插入到新的hash表中</p><h2 id="hash碰撞（多个输入对应同一个输出）"><a href="#hash碰撞（多个输入对应同一个输出）" class="headerlink" title="hash碰撞（多个输入对应同一个输出）"></a>hash碰撞（多个输入对应同一个输出）</h2><p>使用二次hash</p><ul><li>线性探测法</li></ul><p>增：在数组中查找空位，存放数据。</p><p>查：查找的时候，若在原本的值的位置没有，就往下遍历查找，一直查找到空为止。</p><p>删：要把对于位置赋值为-1（相当于伪删除）。如果不给值的话，在查找的时候就找不到删除元素之后的元素。</p><ul><li>开放探测法</li><li>随机探测法</li><li>使用链表</li></ul><p>数组、值小，范围可控</p><p>set、数组很大</p><p>map、k对应有value</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;hash实现快速插入和快速查找（时间复杂度都为O（1））&lt;/p&gt;
+&lt;p&gt;对于data构造一个函数，得到data的hash值，存入hash表中。  &lt;/p&gt;
+&lt;p&gt;和函数一样，一个输入都有对应的输出。&lt;/p&gt;
+&lt;h2 id=&quot;hash扩容&quot;&gt;&lt;a href=&quot;#hash扩容&quot;</summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://xmuter.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="hash" scheme="https://xmuter.github.io/tags/hash/"/>
+    
+  </entry>
   
   <entry>
     <title>环形链表Ⅱ</title>
@@ -397,6 +454,30 @@
   </entry>
   
   <entry>
+    <title>imx6u开发学习笔记</title>
+    <link href="https://xmuter.github.io/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://xmuter.github.io/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <published>2024-03-06T08:21:26.000Z</published>
+    <updated>2024-03-16T08:23:19.370Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>mfgtool 上位机固化系统</strong></p><p>直接点击Mfgtool2-eMMC-ddr512-eMMC.vbs即可在线固化</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;mfgtool 上位机固化系统&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;直接点击Mfgtool2-eMMC-ddr512-eMMC.vbs即可在线固化&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="开源项目" scheme="https://xmuter.github.io/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>栈Stack学习</title>
     <link href="https://xmuter.github.io/2024/03/04/%E6%A0%88Stack%E5%AD%A6%E4%B9%A0/"/>
     <id>https://xmuter.github.io/2024/03/04/%E6%A0%88Stack%E5%AD%A6%E4%B9%A0/</id>
@@ -499,81 +580,6 @@
     
     
     <category term="开源项目" scheme="https://xmuter.github.io/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spyglass学习</title>
-    <link href="https://xmuter.github.io/2024/02/26/spyglass%E5%AD%A6%E4%B9%A0/"/>
-    <id>https://xmuter.github.io/2024/02/26/spyglass%E5%AD%A6%E4%B9%A0/</id>
-    <published>2024-02-26T10:46:37.000Z</published>
-    <updated>2024-02-26T10:59:05.646Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-Spyglass介绍"><a href="#1-Spyglass介绍" class="headerlink" title="1 Spyglass介绍"></a>1 Spyglass介绍</h1><p>​SpyGlass是目前业界唯一可靠的RTL Sign off解决方案，可以帮助客户在设计早期发现潜在问题，保证产品质量，极大的减少设计风险, 降低设计成本。SpyGlass已经成为集成电路开发过程中必不可少的RTL-QA工具。SpyGlass作为第三代RTL代码质量分析工具的领导者, 已经被全世界的IC设计公司和IP公司广泛采用。</p><h2 id="1-1-Spyglass技术领先优势"><a href="#1-1-Spyglass技术领先优势" class="headerlink" title="1.1 Spyglass技术领先优势"></a>1.1 Spyglass技术领先优势</h2><ul><li>业界唯一公认的RTL sign off解决方案</li><li>软IP出厂质量检验必备工具</li><li>TSMC IP 9000 采用SpyGlass</li><li>业界检查规则最全的检查工具，内含5000余条设计的规则</li><li>业界最全面的多时钟域CDC检查机制</li><li>业界最快速的早期DFT检查方法学</li><li>业界最先进的早期低功耗解决方案</li><li>业界唯一的SDC检查工具</li><li>可与设计流程上其它环节EDA工具无缝连接</li><li>支持深亚微米设计规则</li></ul><h2 id="1-2-SpyGlass子模块介绍"><a href="#1-2-SpyGlass子模块介绍" class="headerlink" title="1.2 SpyGlass子模块介绍"></a>1.2 SpyGlass子模块介绍</h2><ul><li>SpyGlass-Lint<ul><li>支持多种规则检查，能发现诸如Latch等代码质量问题。</li></ul></li><li>SpyGlass-CDC<ul><li>支持所有常见的同步器；自动识别设计中复杂的握手信号和FIFO同步机制并对其进行形式验证；自动识别gray-code逻辑和re-convergent信号并对其进行形式验证。用户不需要提供任何的仿真激励和assertions来测试CDC问题，工具自动生成并进行CDC分析。</li></ul></li><li>SpyGlass-Power<ul><li>帮助用户管理复杂的多电源和电压域：它可以验证、显示和分析多个域之间的串扰问题，并且自动修复功能可以自动的插入level-shifter和isolation逻辑。SpyGlass-Power是包括针对时钟、数据通路控制、总线和内存单元的一套完全的技术。SpyGlass-Power的最新功能还包括基于RTL代码的功耗估计和最优门控时钟设计建议。</li></ul></li><li>SpyGlass-DFT<ul><li>包括丰富的、超过100条DFT设计规则。这些包括时钟规则、锁存器规则、布局规则、三态规则、RAM规则、扫描链规则等。SpyGlass-Test包括At-speed覆盖率预测，因此它能明确的指出今后测试的瓶颈。它不仅能报告覆盖率，还能描述出覆盖率低的原因。它统一的自动修复能力自动的更正很多扫描出的问题。</li></ul></li><li>SpyGlass-Constraints<ul><li>自动生成对应RTL或网表的SDC以及时序异常约束；自动对时序异常进行形式验证；精确的查明SDC的语法、一致性和完整性问题，包括模块内部的、模块之间的，以及模块和整个芯片之间。SpyGlass-Constraints可以把模块级的SDC合并成芯片级的SDC；检测出SDC的不同版本和针对不同工具、不同设计阶段的SDC存在的问题。</li></ul></li></ul><p>以上构成分析RTL问题的完整平台，全面的解决RTL设计中所存在的各方面问题。</p><h2 id="1-3-Spyglass基本概念"><a href="#1-3-Spyglass基本概念" class="headerlink" title="1.3 Spyglass基本概念"></a>1.3 Spyglass基本概念</h2><p>对于Spyglass，我们先要知晓一些基本概念:</p><ul><li><strong>Rule</strong>: 是SpyGlass 进行RTL分析的最小单位。</li><li><strong>Goal</strong>: 是一系列相关Rule的集合,组合起来完成RTL分析的某个特定任务. user可以用GuideWare定义好的Goal, 也可根据工程项目要求来选择一系列rule的集合形成自定义 GUI里面点Goal的button来选择设定, 也可在Prj file 里定义。</li><li><strong>Sub-Methodology</strong>: 是一系列相关Goal的集合, 用以达成某方面特定目标, 如完成CDC check。</li><li><strong>SGDC</strong>: Constraints 文件, 主要包含clock和reset等约束信息。</li><li><strong>Waiver</strong>: 用以过滤一些结果的文件。</li><li><strong>Severity</strong>: report结果中分Fatal, Error, Warning和INFO四等级信息。</li><li><strong>Parameter</strong>: 可以在进行RTL分析之前设定某些参数, 对检查过程进行一些约束。</li></ul><h2 id="1-4-Spyglass流程阶段"><a href="#1-4-Spyglass流程阶段" class="headerlink" title="1.4 Spyglass流程阶段"></a>1.4 Spyglass流程阶段</h2><p>Spyglass的原理流程分为三个阶段：设置阶段、目标和运行阶段、分析结果阶段，如下所示：</p><p><img src="spyglass%E5%9B%BE1.png" alt="spyglass图1"></p><h1 id="2-Spyglass界面操作"><a href="#2-Spyglass界面操作" class="headerlink" title="2 Spyglass界面操作"></a>2 Spyglass界面操作</h1><h2 id="2-1-读取设计文件"><a href="#2-1-读取设计文件" class="headerlink" title="2.1 读取设计文件"></a>2.1 读取设计文件</h2><p>（1）Linux的terminal输入spyglass &amp;，这便打开了Spyglass工具的图形界面。</p><p>（2）点击工具左侧的“Add Files”，加载设计文件。</p><p><img src="spyglass%E5%9B%BE2.png" alt="spyglass图2"></p><p>（3）弹出的选中界面选中所需的Verilog文件，如果准备好了filelist，可以直接选中filelist，然后点击Add按钮</p><p><img src="spyglass%E5%9B%BE3.png" alt="spyglass图3"></p><p>此时Spyglass界面下方的sg_shell界面会打印出读取到文件的相关信息：</p><p><img src="spyglass%E5%9B%BE4.png" alt="spyglass图4"></p><h2 id="2-2-设置顶层模块"><a href="#2-2-设置顶层模块" class="headerlink" title="2.2 设置顶层模块"></a>2.2 设置顶层模块</h2><p>（1）点击“Set Options”，然后双击“Top Level Design Unit”的Value框，输入顶层模块名“uart_top”，再敲回车。</p><p><img src="spyglass%E5%9B%BE5.png" alt="spyglass图5"></p><h2 id="2-3-编译设计"><a href="#2-3-编译设计" class="headerlink" title="2.3 编译设计"></a>2.3 编译设计</h2><p>先点击上方的“Read Design”，再点击左侧的“Run Design Read”，开始进行文件编译和分析，结果见下方窗口。</p><p><img src="%E5%9B%BE6.png" alt="图6"></p><p>这次的文件编译没有问题，界面中的Instances出现了目录结构，都是绿色的。</p><p>如果文件不存在，则会报错提醒，同时Instances里的对应文件会变成黑色。Instance下文件的颜色含义如下：</p><ul><li>绿色表示已准备好进行分析但尚未在内部综合；</li><li>黑色表示无法分析该块（黑框）；</li><li>白色表示该模块是可综合的；</li></ul><h2 id="2-4-静态分析lint"><a href="#2-4-静态分析lint" class="headerlink" title="2.4 静态分析lint"></a>2.4 静态分析lint</h2><p>Lint分析不要求完整的工程文件，因此非常方便分工合作，每个人只负责自己这部分的检查即可。</p><p>（1）先点击上面的“Goal Setup”，然后选中lint下的lint_rtl，最后点击“Run Goal”。</p><p><img src="%E5%9B%BE7.png" alt="图7"></p><p><strong>注意：</strong>如果有特殊需求，可以在lint_rtl里右键选择Edit Rules and Parameters来修改或waive规则。</p><p>（2）下方窗口显示出了分析结果，这里是出现了一个Latch，双击该警告会跳转到出问题的代码。思考后发现这里用了组合逻辑，但if后没有跟else，因此出现了锁存器。</p><p><img src="%E5%9B%BE8.png" alt="图8"></p><p>（3）红色信息表示错误，橙色信息表示警告，绿色信息表示正常。</p><p>（4）选中违规信息，右键选择Waive Selected Messages可以忽略掉某种类型的检查。</p><p>（5）点击方框中的类似图像界面的符号，还可以查看设计的电路原理图</p><h2 id="2-5-状态机完整性分析"><a href="#2-5-状态机完整性分析" class="headerlink" title="2.5 状态机完整性分析"></a>2.5 状态机完整性分析</h2><p>Spyglass还可以用于检查状态机的完整性，这里重新建立工程，引入一个写有状态机的Verilog。</p><h3 id="（1）编辑sgdc文件"><a href="#（1）编辑sgdc文件" class="headerlink" title="（1）编辑sgdc文件"></a>（1）编辑sgdc文件</h3><p>做状态机的结构完备性检查时，需要用到Spyglass 的工程约束文件，叫做SGDC，这是一种类似SDC的约束文件，全称是：Spyglass Design Constraints。</p><p>新建一个spyglass.sgdc文件，内容如下所示：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#当前设计工程，需要填写 top 模块名称:FSM_3</span><br><span class="line">current_design FSM_3</span><br><span class="line">#当前模块的时钟周期约束，使用模块名.时钟方式索引</span><br><span class="line">clock -name FSM_3.clk -period 10</span><br><span class="line">#当前模块的复位信号，0是低电平有效，1是高电平有效</span><br><span class="line">reset -name FSM_3.rst_n -value 0</span><br><span class="line">#设置一些固定值，使用固定值来分析电路是否存在结构性问题（非必须）</span><br><span class="line">#set_case_analysis -name fsm.pi_money -value 0</span><br></pre></td></tr></table></figure><h3 id="（2）状态机分析"><a href="#（2）状态机分析" class="headerlink" title="（2）状态机分析"></a>（2）状态机分析</h3><p>读取设计文件FSM_3.v和上面写好的约束文件spyglass.sgdc，设置顶层模块为FSM_3，然后点击“Goal Setup”，勾选“adv_lint_verify”，然后点击“Run Goal”，等待报告结果。</p><p><img src="%E5%9B%BE9.png" alt="图9"></p><h3 id="（3）查看状态机"><a href="#（3）查看状态机" class="headerlink" title="（3）查看状态机"></a>（3）查看状态机</h3><p>如果设计没有问题，那么下方窗口显示如下，发现了存在状态机。</p><p><img src="%E5%9B%BE10.png" alt="图10"></p><p>双击该行后，弹出一个“Text Container”报告，点击OK关闭它，这时界面出现了一个新的图标，点击它。</p><p><img src="%E5%9B%BE11.png" alt="图11"></p><p>弹出了状态机图，可以放大和缩小，查看状态机跳转情况。</p><p><img src="%E5%9B%BE12.png" alt="图12"></p><ul><li>红色：无法到达的状态；</li><li>黑色：锁死状态，无法跳出；</li><li>红色线：带有箭头是已经分析的死跳转；</li><li>红色虚线：带有箭头是死跳转驱动；</li><li>蓝色：活锁状态，就是在几个状态中反复循环无法回到初始态；</li></ul><h1 id="3-Spyglass命令操作"><a href="#3-Spyglass命令操作" class="headerlink" title="3 Spyglass命令操作"></a>3 Spyglass命令操作</h1><p>上述操作完成后，退出Spyglass，提示是否保存工程，将其保存为FSM_3.prj，用文本编辑器打开，内容如下：</p><p><img src="%E5%9B%BE13.png" alt="图13"></p><p>这正是我们刚刚操作过的spyglass步骤，那么如何直接采用这些命令呢？</p><h2 id="3-1-读取和编译"><a href="#3-1-读取和编译" class="headerlink" title="3.1 读取和编译"></a>3.1 读取和编译</h2><p>在当前存在FSM_3.prj文件的目录下，使用-batch选项即可自动完成Spyglass的读取和编译，命令如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -designread -batch |tee spyglass.log</span><br></pre></td></tr></table></figure><p>|tee spyglass.log是我另外加的，目的是为了让读取和编译的报告打印到当前目录下的spyglass.log文件中，其实不用加这句也行，因为Spyglass会自动将结果打印到当前目录下FSM_3&#x2F;FSM_3&#x2F;Design_Read&#x2F;spyglass.log中。</p><p><img src="%E5%9B%BE14.png" alt="图14"></p><h2 id="3-2-获取Goal列表"><a href="#3-2-获取Goal列表" class="headerlink" title="3.2 获取Goal列表"></a>3.2 获取Goal列表</h2><p>通过下面命令可以获取可用的Goal列表：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -showgoals</span><br></pre></td></tr></table></figure><p><img src="%E5%9B%BE15.png" alt="图15"></p><h2 id="3-3-运行Goal分析"><a href="#3-3-运行Goal分析" class="headerlink" title="3.3 运行Goal分析"></a>3.3 运行Goal分析</h2><p>我们试着跑“lint&#x2F;lint_rtl”分析，输入如下指令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spyglass -project FSM_3.prj -goals lint/lint_rtl -batch</span><br></pre></td></tr></table></figure><p>terminal在不断显示运行结果了，运行完毕后，打印信息提示我们可以到下列文件查看完整log文件：</p><p><img src="%E5%9B%BE17.png" alt="图17"></p><p>参考资料：</p><ol><li><p><a href="https://blog.csdn.net/qq_30843953/article/details/109629618">spyglass使用教程-CSDN博客</a></p></li><li><p>[Spyglass的CDC检查 - Galois_V - 博客园 (cnblogs.com)](<a href="https://www.cnblogs.com/WenGalois123/p/17459291.html#:~:text=Spyglass%E7%9A%84CDC%E6%A3%80%E6%9F%A5">https://www.cnblogs.com/WenGalois123/p/17459291.html#:~:text=Spyglass的CDC检查</a> 接着前面Lint检查之后需要对RTL进行CDC检查，以下是简单的步骤。 1.在完成lint检查后，也就是确保没有语法错误之后，点击Goal Setup，然后勾选主窗口下cdc_setup_check，然后点击Run Goal,(s) ，当运行完成，会自动弹出Analyze Result窗口。 2.得到分析结果后， cdc%2Fcdc_setup_check文件夹消息。)</p></li><li><p><a href="https://www.cnblogs.com/xianyuIC/p/17488220.html">Spyglass学习笔记 - 咸鱼IC - 博客园 (cnblogs.com)</a></p></li><li><p><a href="https://zhuanlan.zhihu.com/p/116888880">芯片设计进阶之路——SpyGlass CDC流程深入理解(一) - 知乎 (zhihu.com)</a></p></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-Spyglass介绍&quot;&gt;&lt;a href=&quot;#1-Spyglass介绍&quot; class=&quot;headerlink&quot; title=&quot;1 Spyglass介绍&quot;&gt;&lt;/a&gt;1 Spyglass介绍&lt;/h1&gt;&lt;p&gt;​	SpyGlass是目前业界唯一可靠的RTL Sign o</summary>
-      
-    
-    
-    
-    <category term="软件工具学习" scheme="https://xmuter.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="spyglass" scheme="https://xmuter.github.io/tags/spyglass/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Typora使用教程</title>
-    <link href="https://xmuter.github.io/2024/02/25/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"/>
-    <id>https://xmuter.github.io/2024/02/25/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</id>
-    <published>2024-02-25T12:24:31.000Z</published>
-    <updated>2024-02-25T13:07:21.801Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>格式：*#+”空格”+标题（输入几个#就代表几级标题，最小六级标题）*</p><p>快捷键：Ctrl + 数字</p><h2 id="文字"><a href="#文字" class="headerlink" title="文字"></a>文字</h2><h3 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h3><p>语法：~~ + 文字 + ~~<br>快捷键：Alt + Shift + 5</p><p>可在文字上生成一道删除线</p><h3 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h3><p>语法：* + 文字 + *  或  _ + 文字 + _<br>快捷键：Ctrl + i</p><h3 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h3><p>语法：** + 文字 + ** 或者  __ + 文字 +__<br>快捷键：Ctrl + 文字</p><h3 id="斜体-加粗"><a href="#斜体-加粗" class="headerlink" title="斜体+加粗"></a>斜体+加粗</h3><p>语法：*** + 文字 + *** 或  ___ + 文字 + ___<br>快捷键：无</p><h3 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h3><p>语法：<u> + 文字 + </u><br>快捷键：Ctrl + u</p><h3 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h3><p>语法：&#x3D;&#x3D; + 文字 + &#x3D;&#x3D;<br>快捷键：无</p><h3 id="下标"><a href="#下标" class="headerlink" title="下标"></a>下标</h3><p>水:H ~ 2 ~ O<br>双氧水:H ~ 2 ~ O ~ 2</p><p>水:H<del>2</del>O</p><p>双氧水:H<del>2</del>O~2</p><h3 id="上标"><a href="#上标" class="headerlink" title="上标"></a>上标</h3><p>面积:m^2^<br>体积:m^3^</p><h3 id="常用表情"><a href="#常用表情" class="headerlink" title="常用表情"></a>常用表情</h3><p>😄😆😵😭😰😅😢😤 😍😎😩👍👎💯👏🔔🎁❓💣 ❤️☕️🌀 🙇💋🙏💦 💩 ❗️ 💢</p><h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p>可以在—分割线加入：设置表格对齐方式<br>“:——–“表示左对齐，”:———:“表示居中对齐，”———-:”表示右对齐</p><p>|Name | Age|<br>加入|:—:  | —:|<br>|Delta| 19|，变为</p><table><thead><tr><th align="center">Lisa</th><th align="right">21</th><th></th><th>Name</th><th>Age</th></tr></thead><tbody><tr><td align="center">Delta</td><td align="right">19</td><td></td><td></td><td></td></tr><tr><td align="center">Lisa</td><td align="right">21</td><td></td><td></td><td></td></tr></tbody></table><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>“&gt;” + 文字等</p><blockquote><p>这是一个引用</p></blockquote><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>”* “ + 有三种标记<br>“-”+ 三种标记功能一样<br>“+” + 都是无序列表</p><ul><li>有三种标记</li></ul><ul><li>三种标记功能一样</li></ul><ul><li>都是无序列表</li></ul><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><ol><li>数字加.是有序列表</li><li>数字的顺序不决定列表的顺序</li><li>推荐1 2 3 4 的顺序</li></ol><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>语法: &#96;&#96;&#96;语法名称</p><p>import random<br>a &#x3D; random.random()</p><h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>“******************************”<br>    ——————————      “<br>    ______________________________”</p><hr><hr><hr><h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><ul><li><h4 id="外部跳转"><a href="#外部跳转" class="headerlink" title="外部跳转"></a>外部跳转</h4></li></ul><p>[文字]+（网址）</p><p><a href="https://www.baidu.com/">百度一下</a></p><ul><li><h4 id="内部跳转"><a href="#内部跳转" class="headerlink" title="内部跳转"></a>内部跳转</h4></li></ul><p> [对应文字] +（# 对应文字）</p><p>[二.Typora的语法](# 二.Typora的语法)</p><ul><li><h4 id="自动连接"><a href="#自动连接" class="headerlink" title="自动连接"></a>自动连接</h4></li></ul><p>&lt;网址&gt;</p><p><a href="https://www.baidu.com/">https://www.baidu.com</a></p><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>![自己起的图片名] + (图片地址或者图片本地存储的路径)</p><h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><p>无序列表：- + 空格<br>有序列表：1. + 空格<br>引用：&gt; + 空格<br>标题：ctrl + 数字<br>表格：ctrl + t<br>生成目录：[TOC] + 回车<br>选中一整行：ctrl + l<br>选中单词：ctrl + d<br>选中相同格式的文字：ctrl + e<br>跳转到文章开头：ctrl + home<br>跳转到文章结尾：ctrl + end<br>搜索：ctrl + f<br>替换：ctrl + h<br>加粗：ctrl + b<br>倾斜：ctrl + i<br>下划线：ctrl + u<br>删除线：alt + shift + 5<br>插入图片：直接拖动到指定位置即可或者ctrl + shift + i<br>插入链接：ctrl + k</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;标题&quot;&gt;&lt;a href=&quot;#标题&quot; class=&quot;headerlink&quot; title=&quot;标题&quot;&gt;&lt;/a&gt;标题&lt;/h2&gt;&lt;p&gt;格式：*#+”空格”+标题（输入几个#就代表几级标题，最小六级标题）*&lt;/p&gt;
-&lt;p&gt;快捷键：Ctrl + 数字&lt;/p&gt;
-&lt;h2 id=&quot;文</summary>
-      
-    
-    
-    
-    <category term="blog语法" scheme="https://xmuter.github.io/categories/blog%E8%AF%AD%E6%B3%95/"/>
-    
-    
-    <category term="markdown基本操作" scheme="https://xmuter.github.io/tags/markdown%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>图片无法显示的问题</title>
-    <link href="https://xmuter.github.io/2024/02/25/%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>https://xmuter.github.io/2024/02/25/%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
-    <published>2024-02-25T01:35:25.000Z</published>
-    <updated>2024-02-25T12:23:50.787Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="下载插件"><a href="#下载插件" class="headerlink" title="下载插件"></a>下载插件</h2><ul><li>进入你博客的根目录，右键单击, 然后选择 <code>git bash here</code> 打开 git bash.</li><li>键入命令 <code>npm install hexo-asset-image --save</code></li></ul><h2 id="修改插件"><a href="#修改插件" class="headerlink" title="修改插件"></a>修改插件</h2><ul><li>进入博客的根目录，然后下面顺序找到<code>index.js</code>:<br><code>node_modules</code> –&gt; <code>hexo-asset-image</code> –&gt; <code>index.js</code></li><li>用VS Code 或者 记事本打开 <code>index.js</code></li><li>在第 58 行，可以找到这么一行代码：</li></ul><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&#x27;src&#x27;</span>, config.<span class="property">root</span> + link + src);</span><br></pre></td></tr></table></figure><ul><li>把这一行代码改成下面这样</li></ul><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&#x27;src&#x27;</span>, src);</span><br></pre></td></tr></table></figure><ul><li>保存文件</li></ul><p><img src="../%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/%E7%A5%9E%E5%A5%87%E5%AE%9D%E8%B4%9D.jpg"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;下载插件&quot;&gt;&lt;a href=&quot;#下载插件&quot; class=&quot;headerlink&quot; title=&quot;下载插件&quot;&gt;&lt;/a&gt;下载插件&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;进入你博客的根目录，右键单击, 然后选择 &lt;code&gt;git bash here&lt;/code&gt; 打开 git b</summary>
-      
-    
-    
-    
-    <category term="problem" scheme="https://xmuter.github.io/categories/problem/"/>
-    
-    
-    <category term="problem" scheme="https://xmuter.github.io/tags/problem/"/>
     
   </entry>
   
