@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Linux应用开发基础知识</title>
+      <link href="/2024/03/17/Linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2024/03/17/Linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<p>main函数中的两个参数：</p><p>​argc argv 参数个数存储数组</p><p>​主要是传递参数用。</p><p>gcc 是c语言的编译工具</p><p>使用Linux-arm-gcc 编译完arm可执行程序后重新后，Ubuntu通过nfs网络文件系统传输文件至开发板，进行编译调试。</p><h3 id="挂载指令：（数据传输）"><a href="#挂载指令：（数据传输）" class="headerlink" title="挂载指令：（数据传输）"></a>挂载指令：（数据传输）</h3><p><code>mount -t nfs -o nolock,vers=3 192.168.3.40:/home/alienteek/linux/nfs get/ </code></p><p>-t nfs ： 网络文件系统</p><p>-o nolock 不带锁的，ver&#x3D;3（nfs版本是3.0） 地址是xxx.xxx.xxx.xxx：Ubuntu的nfs目录开发板存储目录</p><p>上面的指令意思是，把服务器上nfs里的文件挂载到开发板get文件夹里。</p><p>若文件夹不存在，则要创建文件夹，使用<code>mkdir get</code></p><p>.h 申明-&gt;在系统目录中（工具链目录），或者自己指定</p><p>.c实现</p><p>用户态 user</p><p>内核态kernel</p><p>硬件</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 嵌入式Linux基础 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>有效的字母异位词</title>
       <link href="/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/"/>
       <url>/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</url>
@@ -457,7 +476,7 @@
       <link href="/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
       <url>/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       
-        <content type="html"><![CDATA[<p><strong>mfgtool 上位机固化系统</strong></p><p>直接点击Mfgtool2-eMMC-ddr512-eMMC.vbs即可在线固化</p>]]></content>
+        <content type="html"><![CDATA[<p><strong>mfgtool 上位机固化系统</strong></p><p>直接点击Mfgtool2-eMMC-ddr512-eMMC.vbs即可在线固化</p><p><strong>应用层操控硬件的两种方式</strong></p><p>在 Linux 系统下，一切皆文件！应用层如何操控底层硬件，同样也是通过文件 I&#x2F;O 的方式来实现。设备文件便是各种硬件设备向应用层提供的一个接口，应用层通过对设备文件的 I&#x2F;O 操作</p><p>控硬件设备，譬如 LCD 显示屏、串口、按键、摄像头等等，所以设备文件其实是与硬件设备相互对应的。设备文件通常在&#x2F;dev&#x2F;目录下，我们也把&#x2F;dev 目录下的文件称为设备节点。</p><p>设备节点并不是操控硬件设备的唯一途径，除此之外，我们还可以通过 sysfs 文件系统对硬件设备进行操控。</p><p><strong>sysfs</strong> <strong>文件系统</strong></p><p>sysfs 是一个基于内存的文件系统，同 devfs、proc 文件系统一样，称为虚拟文件系统。它的</p><p>作用是将内核信息以文件的方式提供给应用层使用。</p><p>系统中所有的设备（对象）都会在&#x2F;sys&#x2F;devices 体现出来，是 sysfs 文件系统中最重要的目录结构；而&#x2F;sys&#x2F;bus、&#x2F;sys&#x2F;class、&#x2F;sys&#x2F;dev 分别将设备按照挂载的总线类型、功能分类以及设备号的形式将设备组织存放在这些目录中，这些目录下的文件都是链接到了&#x2F;sys&#x2F;devices 中。</p><p>这里给大家进行一个总结，应用层想要对底层硬件进行操控，通常可以通过两种方式：</p><ul><li><p>&#x2F;dev&#x2F;目录下的设备文件（设备节点）；</p></li><li><p>&#x2F;sys&#x2F;目录下设备的属性文件。</p></li></ul><p>通常情况下，一般简单地设备会</p><p>​使用 sysfs 方式操控，其设备驱动在实现时会将设备的一些属性导出到用户空间 sysfs 文件系统，以属性文件的形式为用户空间提供对这些数据、属性的访问支持，譬如 LED、GPIO 等。但对于一些较复杂的设备通常会使用设备节点的方式，譬如 LCD 等、触摸屏、摄像头等。</p><p><strong>标准接口与非标准接口</strong></p><p> mkdir get 创建get文件夹</p><p> mount -t nfs -o nolock,nfsvers&#x3D;3 192.168.3.40:&#x2F;home&#x2F;alienteek&#x2F;linux&#x2F;nfs get&#x2F;</p><p>umount get&#x2F;&#x2F;卸载get目录</p><p>可执行文件运行起始地址（运行时候的位置，固定的）存储地址是可以变的</p><p>学习路线</p><p>uboot不学</p><p>Linux内核 裁剪移植 不学</p><p>先学 Linux应用开发基础知识第四</p><p>在学驱动开发基础知识第五</p><p>项目实战</p>]]></content>
       
       
       <categories>
