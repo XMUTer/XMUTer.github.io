@@ -1,4 +1,5 @@
 https://xmuter.github.io/2024/03/17/Linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
+https://xmuter.github.io/2024/03/18/%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/
 https://xmuter.github.io/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
 https://xmuter.github.io/2024/03/17/%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/
 https://xmuter.github.io/2024/03/17/hash%E8%A1%A8%E5%AD%A6%E4%B9%A0/
