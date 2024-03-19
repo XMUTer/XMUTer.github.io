@@ -1,3 +1,5 @@
+https://xmuter.github.io/2024/03/19/%E5%BF%AB%E4%B9%90%E6%A0%91/
+https://xmuter.github.io/2024/02/26/%E5%BC%80%E6%BA%90%E8%BD%A6%E8%BD%BD%E7%BB%88%E7%AB%AF%E8%AE%A1%E5%88%92/
 https://xmuter.github.io/2024/03/17/Linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
 https://xmuter.github.io/2024/03/18/%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/
 https://xmuter.github.io/2024/03/06/imx6u%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
@@ -19,7 +21,6 @@ https://xmuter.github.io/2024/03/10/%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%8
 https://xmuter.github.io/2024/03/10/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9/
 https://xmuter.github.io/2024/03/02/%E7%BA%BF%E6%80%A7%E8%A1%A8List%E5%AD%A6%E4%B9%A0/
 https://xmuter.github.io/2024/03/04/%E6%A0%88Stack%E5%AD%A6%E4%B9%A0/
-https://xmuter.github.io/2024/02/26/%E5%BC%80%E6%BA%90%E8%BD%A6%E8%BD%BD%E7%BB%88%E7%AB%AF%E8%AE%A1%E5%88%92/
 https://xmuter.github.io/2024/02/28/MFC%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/
 https://xmuter.github.io/2024/02/26/spyglass%E5%AD%A6%E4%B9%A0/
 https://xmuter.github.io/2024/02/25/Typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/
@@ -56,3 +57,4 @@ https://xmuter.github.io/categories/problem/
 https://xmuter.github.io/categories/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/
 https://xmuter.github.io/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/%E9%93%BE%E8%A1%A8/
 https://xmuter.github.io/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/%E6%95%B0%E7%BB%84/
+https://xmuter.github.io/categories/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/
