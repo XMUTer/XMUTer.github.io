@@ -6,7 +6,7 @@
   <link href="https://xmuter.github.io/atom.xml" rel="self"/>
   
   <link href="https://xmuter.github.io/"/>
-  <updated>2024-04-13T02:45:23.354Z</updated>
+  <updated>2024-04-25T13:58:42.362Z</updated>
   <id>https://xmuter.github.io/</id>
   
   <author>
@@ -21,10 +21,21 @@
     <link href="https://xmuter.github.io/2024/04/13/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     <id>https://xmuter.github.io/2024/04/13/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
     <published>2024-04-13T02:45:23.000Z</published>
-    <updated>2024-04-13T02:45:23.354Z</updated>
+    <updated>2024-04-25T13:58:42.362Z</updated>
+    
+    <content type="html"><![CDATA[<p>驱动开发</p><p>确定主设备号定义file_operations结构体实现对应的open&#x2F;read&#x2F;write函数</p><p>在内核里注册程序register_chrdev入口函数出口函数 提供设备信息、自动创建设备节点（module_init、module_exit）MODULE_LICENSE(“GPL”)必须遵守GPL协议</p><p>chrdevs类似数组，其实不是数组</p><p>misc内核经典字符驱动程序</p><p>copy_from_user函数copy数据至内核、用户空间</p><p>init中注册驱动、创建class、创建device</p><p>insmod 开发板上装驱动程序。驱动程序是xxx.ko</p><p>lsmod查看已经装载的驱动程序</p><p>rmmod卸载驱动程序</p><p>dmeg查看内核打印的东西printk内核打印printf是app打印的</p><p>普通GPIO操作方法</p><p>​使能GPIO模块</p><p>​设置引脚模式选择</p><p>​方向设置</p><p>​设置数据</p><p>​读写寄存器，不要影响其他位所以要先读出来，设置后再写回去。如果直接写入，会影响其他位</p><p>imx6uL GPIO操作方法</p><p>CCM(18章)：时钟控制单元使能端口</p><p>设计IOMUXC（32章） io控制器mux controlpad setting</p><p>设置DRGDIRPSR5组GPIO</p><p>loopback 回环模式</p><p>LED操作方法</p><p>LED驱动程序</p><p>​file operationsregister_chrdev</p><p>入口函数</p><p>出口函数</p><p>class_creat</p><p>drive_creat</p><p>ioremap虚拟映射后才能访问底层驱动</p><p>先写框架</p><p>volatile禁止优化变量</p><p>先设置虚拟地址，再映射到实际地址。不能够直接访问实际地址，ioremap函数</p><p>*a取值<code>int* a</code>就是指针</p><p>strcmp</p><p>dmesg|grep xxx</p><p>打开内核打印信息echo “7 4 1 7”  &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;printk</p><p>LED驱动程序框架</p><p>驱动程序分层</p><p>app层</p><p>driverled_openled_write</p><p>#ifndef防止多次定义同一个宏</p><p>先写框架，再写代码</p><p> 需要映射到虚拟地址才能使用ioremap</p><p>MMU内存管理功能、权限保护功能</p><p>staticvolatileunsigned</p><p>驱动程序思想：面向对象（用结构体表现某一对象）、分层、分离</p><p>分离：资源、硬件通用代码</p><p>优化写法</p><p>linux驱动 &#x3D; 驱动框架 +硬件操作</p><p>主要在驱动框架的阅读上</p><p>platform_drive结构体</p><p>dts（设备树） -&gt; dtb（二进制）</p><p>分配、设置、注册结构体bus</p><p>设备树：只是配置信息而已</p><p> bus连通dev、drv</p><p>比较driver_override和platform_driver的driver</p><p>记录、创建</p><p>export_symbol导出函数</p><p>设备树的引入 DTS</p><p>&#x2F;f 根节点</p><p>xxx{</p><p>}xxx节点</p><p>chosen 虚拟节点</p><p>#address_cells、#size_cells数据大小</p><p>compatible兼容xxx驱动，寻找对应的driver的</p><p>model具体是哪个驱动</p><p>status使能</p><p>编译设备树文件make dtbs V&#x3D;1</p><p>按空格进入bootloard fdtfile</p><p>启动后查看设备树</p><p>内核处理设备树</p><p>compatile属性</p><p> device_node 在根节点里</p><p>设备树实践设备树（资源）和驱动分离</p><p>修改dtb文件</p><p>APP读取按键值。中断、休眠、唤醒、poll</p><p>按键驱动程序</p><p>面向对象file_operationsregister_chrdev入口出口unregister</p><p>驱动在open除了配置pin外，还会注册中断服务程序按键触发中断</p><p>poll：有数据，直接返回。无数据，休眠一段时间（类似定时中断）</p><p>异步通知（外部中断）：发SIGIO信号谁发？ 发什么？ 发给谁？ 怎么处理？ 一定要有这四步</p><p>GPIO和Pinctrl子系统使用：</p><p>​IOMUX配置pin为不同功能</p><p>​IOMUX（Pinctrl）Pinctrl软件概念，起引脚复用、配置作用（BSP工程师写的）驱动工程师用就行。client客户</p><p>​generic pin multiplexing nodePinctrl中可以配置程某个功能或者复用状态，没有通用格式。但是概念是通用的</p><p>​GPIO子系统概念</p><p>​static</p><p>主设备号、次设备号</p><p>设备树里重复指定GPIO 原因：pinctrol-gpio写好，顺序约定好直接用princtrol就行。为了避免pinctrol没写好，因此重复指定GPIO</p><p>异常与中断的概念以及处理流程</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;驱动开发&lt;/p&gt;
+&lt;p&gt;确定主设备号	定义file_operations结构体	实现对应的open&amp;#x2F;read&amp;#x2F;write函数	&lt;/p&gt;
+&lt;p&gt;在内核里注册程序register_chrdev	入口函数	出口函数	 提供设备信息、自动创建设备节点（modul</summary>
+      
     
     
     
+    <category term="嵌入式Linux基础" scheme="https://xmuter.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%9F%BA%E7%A1%80/"/>
     
     
   </entry>
